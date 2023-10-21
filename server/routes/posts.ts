@@ -50,7 +50,7 @@ router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
 
 // delete 메서드 정의 : query이기 때문에 :id를 붙일 필요 없음
 // params으로 request 보냄
-//api 정의하는 방법은 따로 필요
+// api 정의하는 방법은 따로 학습 필요
 router.delete("/", (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.query.id);
   console.log(req);
