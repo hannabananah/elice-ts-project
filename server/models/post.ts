@@ -1,4 +1,4 @@
-import { Post } from "../../types/index";
+import { Post } from "../types/index";
 
 let posts = [
   {
@@ -38,8 +38,8 @@ const list = () => {
   }));
 };
 
-const get = (id: Number) => {
-  const note = posts.find((note) => note.id === id);
+const getPost = (id: Number) => {
+  const note = posts.find((x) => x.id === id);
 
   if (!note) {
     throw new Error("Post not found");
@@ -47,7 +47,7 @@ const get = (id: Number) => {
   return note;
 };
 
-const create = (post: Post): Post => {
+const createPost = (post: Post): Post => {
   const { id: lastId } = posts[posts.length - 1];
   const newPost = {
     id: lastId + 1,
@@ -61,8 +61,8 @@ const create = (post: Post): Post => {
   return newPost;
 };
 
-const update = (post: Post) => {
-  const index = posts.findIndex((note) => note.id === post.id);
+const updatePost = (post: Post) => {
+  const index = posts.findIndex((x) => x.id === post.id);
 
   if (index < 0) {
     throw new Error("Post not found for update");
@@ -77,14 +77,14 @@ const update = (post: Post) => {
   return note;
 };
 
-const del = (id: Number) => {
-  if (!posts.some((note) => note.id === id)) {
+const deletePost = (id: Number) => {
+  if (!posts.some((x) => x.id === id)) {
     throw new Error("Post not found for delete");
   }
 
-  posts = posts.filter((note) => note.id !== id);
+  posts = posts.filter((x) => x.id !== id);
 
   return;
 };
 
-export { list, get, create, update, del };
+export { list, getPost, createPost, updatePost, deletePost };

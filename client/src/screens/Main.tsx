@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 type Post = {
     id: Number;
@@ -12,6 +13,11 @@ type Post = {
 
 
 function Main() {
+    const navigate = useNavigate();
+    const refresh = () => {
+        window.location.reload();
+    }
+
     const [data, setData] = useState<Post[] | null>(null);
 
     useEffect(() => {
@@ -26,31 +32,48 @@ function Main() {
     }, [])
 
     // 삭제
-    // function onClick() {
-    //     async function fetchData() {
-    //         await axios.delete('http://localhost:3003/posts').then((res) => {
-    //             // id 정보를 json 형식으로 서버에 보내주어야 한다
-    //             console.log('데이터 삭제')
-    //         })
-    //     }
-    //     fetchData()
-    // }
-    
+    // 2. deletePost에서 id는 Number type으로 받는다.
+    const deletePost = async (id: Number) => {
+        if (window.confirm('게시글을 삭제하시겠습니까?')) {
+            await axios.delete('http://localhost:3003/posts', { params: { id: id } }).then((res) => {
+                const status = res.status;
+                if (status === 200) {
+                    refresh()
+                } else {
+                    alert(status);
+                }
+            });
+        }
+    }
+
+    // 글 작성페이지로 이동
+    const gotoWrite = () => {
+        navigate('/write');
+    };
+
+    // 글 작성페이지로 이동
+    const gotoDetail = () => {
+        navigate('/detail');
+    };
+
     return (
-        <div>Main
+        <div><span>Main</span>
+            <button onClick={gotoWrite}>글 작성</button>
             {/* 데이터가 있으면 가져온다*/}
             <ul>
                 {data && data.map(item => (
                     <li key={String(item.id)}>
                         <h2>{item.uid}</h2>
                         <h2>{item.title}</h2>
-                        <p>{item.content}</p>
+                        <p onClick={gotoDetail}>{item.content}</p>
                         <p>{item.createdAt}</p>
                         <p>{item.updatedAt}</p>
-                        {/* 버튼 누르면 해당 아이디가 함수로 보내지는 문법 찾기 */}
-                        <button>delete</button>
+
+                        {/*1. 버튼을 누르면 현재 게시글 id를 deletePost로 보낸다*/}
+                        <button onClick={() => deletePost(item.id)}>클릭</button>
                     </li>
                 ))}
+                {/* 데이터가 없는 경우 빈 목록 보여주기 */}
             </ul>
 
         </div>
