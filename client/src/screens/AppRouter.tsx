@@ -3,11 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 // 첫진입 시 보이는 로그인 창
-const Main = React.lazy(() => import("./Main"));
-// 글 작성 페이지
-const Write = React.lazy(() => import("./Write"));
-// 글 상세 페이지
-const Detail = React.lazy(() => import("./Detail"));
+// const Main = React.lazy(() => require("./Main"));
+const BoardList = React.lazy(() => import("./board/list/index"));
+// // 글 작성 페이지
+// const Write = React.lazy(() => require("./board/create/index"));
+// // 글 상세 페이지
+// const Detail = React.lazy(() => require("./board/detail/index"));
 
 const AppRouter: FC = () => {
 
@@ -16,10 +17,11 @@ const AppRouter: FC = () => {
             <Suspense fallback="..loading">
                 <div>
                     <Routes>
-                        <Route path="/" element={<Main />} />
-                        <Route path="/write" element={<Write />} />
-                        <Route path="/detail" element={<Detail />} />
-                        {/*  */}
+                        {/* <Route path="/" element={<Main />} /> */}
+                        <Route path="/" element={<BoardList />} />
+                        {/* <Route path="/:id" element={<Detail />} />
+                        <Route path="/create" element={<Write />} />
+                        <Route path="/modify/:id" element={<Write />} /> */}
                     </Routes>
                 </div>
             </Suspense>

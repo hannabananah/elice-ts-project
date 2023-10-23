@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 type Post = {
-    id: Number;
+    id: number;
     uid: string,
     title: string;
     content: string;
@@ -62,7 +62,7 @@ function Main() {
             {/* 데이터가 있으면 가져온다*/}
             <ul>
                 {data && data.map(item => (
-                    <li key={String(item.id)}>
+                    <li key={item.id}>
                         <h2>{item.uid}</h2>
                         <h2>{item.title}</h2>
                         <p onClick={gotoDetail}>{item.content}</p>
