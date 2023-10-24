@@ -13,37 +13,37 @@ const router = Router();
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
   const posts = list();
-  console.log("----params-----", req.params);
-  console.log("--------body-------", req.body);
   // res.header("Access-Control-Allow-Origin", "*");
   res.json(posts);
 });
 
 router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
-  console.log(req);
 
   try {
     const post = getPost(id);
     res.json(post);
-    console.log('22222')
   } catch (e) {
     next(e);
   }
 });
 
 router.post("/", (req: Request, res: Response, next: NextFunction) => {
-  const { title, content } = req.body;
-  const post = createPost(title);
+  // 객체 하나씩 보내지 말고 req.body 채로 data를 넘긴다.
+  // const { title, content } = req.body;
+  const data = req.body;
+  const post = createPost(data);
   res.json(post);
 });
 
-router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
+// patch로 요청 보낸 것은 patch로 받아야되는걸까나...(modify/index.txs line 26즈음 참고)
+router.patch("/:id", (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
-  const { title, content } = req.body;
+  const data = req.body;
 
+  // patch에 대해서 공부하기
   try {
-    const post = updatePost(content);
+    const post = updatePost(data);
     res.json(post);
   } catch (e) {
     next(e);
@@ -53,17 +53,16 @@ router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
 // delete 메서드 정의 : query이기 때문에 :id를 붙일 필요 없음
 // params으로 request 보냄
 // api 정의하는 방법은 따로 학습 필요
-router.delete("/", (req: Request, res: Response, next: NextFunction) => {
-  const id = Number(req.query.id);
-  console.log(req);
-  console.log(req.query);
-  console.log("delete");
-  console.log(id);
+router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
+  //  qeury/body/params 중 어떤 방식으로 req가 들어오는지 우선적으로 확인하기
+  const id = Number(req.params.id);
   try {
     deletePost(id);
     res.json({ result: "success" });
+    console.log("success");
   } catch (e) {
     next(e);
+    console.log("fail");
   }
 });
 

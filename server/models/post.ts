@@ -34,7 +34,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 5,
     uid: "bbbdfgdfgfdgfdgb",
     title: "third note",
     content: "My third note is here.",
@@ -42,7 +42,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 6,
     uid: "1111",
     title: "third note",
     content: "My third note is here.",
@@ -50,7 +50,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 7,
     uid: "3333",
     title: "third note",
     content: "My third note is here.",
@@ -58,7 +58,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 8,
     uid: "bbb4444bb",
     title: "third note",
     content: "My third note is here.",
@@ -66,7 +66,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 9,
     uid: "555",
     title: "third note",
     content: "My third note is here.",
@@ -74,7 +74,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 10,
     uid: "666",
     title: "third note",
     content: "My third note is here.",
@@ -82,7 +82,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 11,
     uid: "777",
     title: "third note",
     content: "My third note is here.",
@@ -90,7 +90,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 12,
     uid: "8888",
     title: "third note",
     content: "My third note is here.",
@@ -98,7 +98,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 13,
     uid: "999",
     title: "third note",
     content: "My third note is here.",
@@ -106,7 +106,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 14,
     uid: "00606",
     title: "third note",
     content: "My third note is here.",
@@ -114,7 +114,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 15,
     uid: "4645",
     title: "third note",
     content: "My third note is here.",
@@ -158,12 +158,14 @@ const createPost = (post: Post): Post => {
 };
 
 const updatePost = (post: Post) => {
-  const index = posts.findIndex((x) => x.id === post.id);
-
+  const index = posts.findIndex((x) => x.id === Number(post.id));
+  console.log(post);
   if (index < 0) {
     throw new Error("Post not found for update");
   }
   const note = posts[index];
+  note.id = Number(post.id);
+  note.uid = post.uid;
   note.title = post.title;
   note.content = post.content;
   note.createdAt = post.createdAt;

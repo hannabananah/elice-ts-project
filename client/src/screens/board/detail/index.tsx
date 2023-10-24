@@ -14,13 +14,10 @@ const BoardDetail = () => {
     // state(any 수정해야함)
     const [detailPost, setDetailPost] = useState<any>([])
 
-    console.log("------------실행-----")
     useEffect(() => {
         setLoading(true)
-        console.log("t실행되었습니다")
         axios.get(`http://localhost:3003/posts/${params}`)
             .then((res) => {
-                console.log("ressssssss", res)
                 setDetailPost(res.data)
             })
 
@@ -28,6 +25,26 @@ const BoardDetail = () => {
                 console.log(error)
             })
     }, [])
+
+    const deletePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+
+        if (window.confirm('게시글을 삭제하시겠습니까?')) {
+            await axios.delete(`http://localhost:3003/posts/${params}`).then((res) => {
+                const status = res.status;
+                if (status === 200) {
+                    navigate('/posts')
+                } else {
+                    alert(status);
+                }
+            }).catch(function (error) {
+                console.log("e--------", error)
+            })
+        } else {
+            return false
+        }
+    }
+
 
     return (
         <div>
@@ -50,6 +67,7 @@ const BoardDetail = () => {
                         <Link to={`/posts/modify/${detailPost.id}`}>
                             <button>수정</button>
                         </Link>
+                        <button onClick={deletePost}>삭제</button>
                         <Link to="/posts">
                             <button>목록보기</button>
                         </Link>

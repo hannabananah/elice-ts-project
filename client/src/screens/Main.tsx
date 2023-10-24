@@ -24,8 +24,6 @@ function Main() {
         async function fetchData() {
             await axios.get('http://localhost:3003/posts').then((res) => {
                 setData(res.data)
-                console.log(res.data[0])
-                console.log(res.data[0].content)
             })
         }
         fetchData()

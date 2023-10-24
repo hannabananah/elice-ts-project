@@ -1,80 +1,73 @@
-import React, { useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-const BoardWrite = () => {
-    const navigate = useNavigate();
+const BoardCreate = () => {
+    // hook
+    const navigate = useNavigate()
 
-    const [board, setBoard] = useState({
-        title: '',
-        createdBy: '',
-        contents: '',
-    });
+    // state
+    let [title, setTitle] = useState<string>('')
+    let [content, setContent] = useState<string>('')
 
-    const { title, createdBy, contents } = board; //비구조화 할당
+    const formSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        if (title.length === 0) {
+            alert('제목을 입력해 주세요.')
+        } else if (content.length === 0) {
+            alert('내용을 입력해 주세요.')
+        } else {
+            if (window.confirm('게시글을 등록하시겠습니까?')) {
+                axios.post('http://localhost:3003/posts', {
+                    title: title,
+                    content: content
+                })
+                    .then(function (res) {
+                        alert('게시글이 등록되었습니다.')
+                        navigate('/posts')
+                    })
 
-    const onChangeInput = (e: ChangeEvent<HTMLInputElement>): void => {
-        const { value, name } = e.target; //e.target에서 name과 value만 가져오기
-        setBoard({
-            ...board,
-            [name]: value,
-        });
-    };
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            } else {
+                return false
+            }
+        }
+    }
 
-    const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-        const { value, name } = e.target; //e.target에서 name과 value만 가져오기
-        setBoard({
-            ...board,
-            [name]: value,
-        });
-    };
+    const formCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
 
-    const saveBoard = async () => {
-        await axios.post(`//localhost:8080/board`, board).then((res) => {
-            alert('등록되었습니다.');
-            navigate('/board');
-        });
-    };
-
-    // 이전 메인페이지로 이동
-    const backToMain = () => {
-        navigate('/');
-    };
+        if (window.confirm('게시글 작성을 취소하시겠습니까?')) {
+            navigate('/posts')
+        } else {
+            return false
+        }
+    }
 
     return (
         <div>
+            <h2>Write content</h2>
+
+            <form>
+                <div>
+                    <label htmlFor="title">Title</label>
+                    <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목을 입력해주세요." />
+                </div>
+
+                <div>
+                    <label htmlFor="content">Content</label>
+                    <textarea name="content" id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder="내용을 입력해주세요." />
+                </div>
+            </form>
+
             <div>
-                <span>제목</span>
-                <input type="text" name="title" value={title} onChange={onChangeInput} />
-            </div>
-            <br />
-            <div>
-                <span>작성자</span>
-                <input
-                    type="text"
-                    name="createdBy"
-                    value={createdBy}
-                    onChange={onChangeInput}
-                />
-            </div>
-            <br />
-            <div>
-                <span>내용</span>
-                <textarea
-                    name="contents"
-                    cols={30}
-                    rows={10}
-                    value={contents}
-                    onChange={onChangeTextArea}
-                ></textarea>
-            </div>
-            <br />
-            <div>
-                <button onClick={saveBoard}>저장</button>
-                <button onClick={backToMain}>취소</button>
+                <button onClick={formSubmit}>확인</button>
+                <button onClick={formCancel}>취소</button>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default BoardWrite;
+export default BoardCreate
