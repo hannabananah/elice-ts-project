@@ -21,10 +21,12 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
 
 router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
+  console.log(req);
 
   try {
     const post = getPost(id);
     res.json(post);
+    console.log('22222')
   } catch (e) {
     next(e);
   }

@@ -6,9 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // const Main = React.lazy(() => require("./Main"));
 const BoardList = React.lazy(() => import("./board/list/index"));
 // // 글 작성 페이지
-// const Write = React.lazy(() => require("./board/create/index"));
-// // 글 상세 페이지
-// const Detail = React.lazy(() => require("./board/detail/index"));
+const Write = React.lazy(() => import("./board/create/index"));
+// 글 상세 페이지
+const BoardDetail = React.lazy(() => import("./board/detail/index"));
 
 const AppRouter: FC = () => {
 
@@ -18,9 +18,9 @@ const AppRouter: FC = () => {
                 <div>
                     <Routes>
                         {/* <Route path="/" element={<Main />} /> */}
-                        <Route path="/" element={<BoardList />} />
-                        {/* <Route path="/:id" element={<Detail />} />
-                        <Route path="/create" element={<Write />} />
+                        <Route path="/posts" element={<BoardList />} />
+                        <Route path="/posts/:id" element={<BoardDetail />} />
+                        {/* <Route path="/create" element={<Write />} />
                         <Route path="/modify/:id" element={<Write />} /> */}
                     </Routes>
                 </div>
