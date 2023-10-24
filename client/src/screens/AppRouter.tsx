@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // const Main = React.lazy(() => require("./Main"));
 const BoardList = React.lazy(() => import("./board/list/index"));
 // // 글 작성 페이지
-// const Write = React.lazy(() => require("./board/create/index"));
+const Write = React.lazy(() => import("./board/create/index"));
 // 글 상세 페이지
 const BoardDetail = React.lazy(() => import("./board/detail/index"));
 

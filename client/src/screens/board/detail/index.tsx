@@ -9,13 +9,14 @@ const BoardDetail = () => {
     const params = useParams().id;
     const navigate = useNavigate()
 
-    const [loading, setLoading] = useState();
+    const [loading, setLoading] = useState(false);
 
     // state(any 수정해야함)
     const [detailPost, setDetailPost] = useState<any>([])
 
     console.log("------------실행-----")
     useEffect(() => {
+        setLoading(true)
         console.log("t실행되었습니다")
         axios.get(`http://localhost:3003/posts/${params}`)
             .then((res) => {
@@ -31,9 +32,7 @@ const BoardDetail = () => {
     return (
         <div>
             {loading ? (
-                <h2>loading...</h2>
-            ) : (
-                <div>
+                <>
                     <h2>{detailPost.title}</h2>
 
                     <div>
@@ -55,7 +54,10 @@ const BoardDetail = () => {
                             <button>목록보기</button>
                         </Link>
                     </div>
-                </div>
+                </>
+
+            ) : (
+                <h2>loading...</h2>
             )}
         </div>
     );
