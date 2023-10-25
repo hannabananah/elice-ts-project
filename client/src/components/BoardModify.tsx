@@ -91,7 +91,6 @@ const BoardModify = () => {
     }, [modifyBoardData.content])
 
 
-
     return (
         <Container component="main">
             <Box
@@ -115,7 +114,8 @@ const BoardModify = () => {
                                 fullWidth
                                 id="name"
                                 // label="작성자 이름 *"
-                                value={uid}
+                                // undefined에서 useEffect 이후에 값이 들어가면 발생하는 에러로 value={uid}가 아닌 ''의 경우에도 값을 받도록 추가함
+                                value={uid || ''}
                                 disabled
                             // error={Boolean(nameError)}
                             />
@@ -123,6 +123,7 @@ const BoardModify = () => {
                                 {/* {nameError} */}
                             </Typography>
                         </Grid>
+
                         <Grid item xs={12}>
                             <TextField
                                 placeholder={"제목을 수정해주세요."}

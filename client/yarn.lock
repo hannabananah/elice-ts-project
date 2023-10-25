@@ -9457,6 +9457,11 @@ react-js-pagination@^3.0.3:
     react "15.x.x - 16.x.x"
     tar "2.2.2"
 
+react-mui-pagination@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-mui-pagination/-/react-mui-pagination-1.1.0.tgz#1b7a3f9ea7a14ffc70bd3726180f63addbcf62d4"
+  integrity sha512-BEDEbgefo3YN3emEZCzLZF7YqFB8Wws6siHD/FlPGekmNRkH3KKs3U07AkdpkNhqjVF7venUEUDvPUS0xMiHMQ==
+
 react-refresh@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
