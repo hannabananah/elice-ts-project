@@ -59,12 +59,38 @@ router.get( "/:_id", async (req: Request, res: Response, next: NextFunction ) =>
   const _id = req.params._id;
 
   const dePosts = await Posts.findOne({_id:_id});
-  console.log(dePosts);
-  //
-  res.json(dePosts);
+  const obj = {...dePosts._doc};
+  const newDePosts = {...obj,id:obj._id};
+  console.log(newDePosts);
+
+
+  res.json(newDePosts);
 })
 
+// Posts 삭제하기
+router.delete("/:_id", async (req: Request, res: Response, next: NextFunction) => {
+  const _id = req.params._id;
 
+  const delPosts = await Posts.deleteOne({_id:_id});
+  console.log(delPosts);
+  res.json(delPosts);
+})
+
+// Posts 수정하기
+router.put( "/:id", async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const { uid, title, content, updatedAt } = req.body;
+
+  const modiPosts = await Posts.findOneAndUpdate({_id:id}, {
+    uid, title, content, updatedAt
+  })
+  console.log(modiPosts);
+  res.json(modiPosts);
+} )
+
+
+
+//********
 // router.get("/", (req: Request, res: Response, next: NextFunction) => {
 //   const posts = list();
 //   // res.header("Access-Control-Allow-Origin", "*");
