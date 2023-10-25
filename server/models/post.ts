@@ -1,6 +1,5 @@
-import { Post } from "../types/index";
 
-let posts = [
+const postsData = [
   {
     id: 1,
     uid: "aaaaa",
@@ -123,66 +122,4 @@ let posts = [
   },
 ];
 
-const list = () => {
-  return posts.map(({ id, uid, title, content, createdAt, updatedAt }) => ({
-    id,
-    uid,
-    title,
-    content,
-    createdAt,
-    updatedAt,
-  }));
-};
-
-const getPost = (id: Number) => {
-  const note = posts.find((x) => x.id === id);
-
-  if (!note) {
-    throw new Error("Post not found");
-  }
-  return note;
-};
-
-const createPost = (post: Post): Post => {
-  const { id: lastId } = posts[posts.length - 1];
-  const newPost = {
-    id: lastId + 1,
-    uid: post.uid,
-    title: post.title,
-    content: post.content,
-    createdAt: post.createdAt,
-    updatedAt: post.updatedAt,
-  };
-  posts.push(newPost);
-  return newPost;
-};
-
-const updatePost = (post: Post) => {
-  const index = posts.findIndex((x) => x.id === Number(post.id));
-  console.log(post);
-  if (index < 0) {
-    throw new Error("Post not found for update");
-  }
-  const note = posts[index];
-  note.id = Number(post.id);
-  note.uid = post.uid;
-  note.title = post.title;
-  note.content = post.content;
-  note.createdAt = post.createdAt;
-  note.updatedAt = post.updatedAt;
-
-  posts[index] = note;
-  return note;
-};
-
-const deletePost = (id: Number) => {
-  if (!posts.some((x) => x.id === id)) {
-    throw new Error("Post not found for delete");
-  }
-
-  posts = posts.filter((x) => x.id !== id);
-
-  return;
-};
-
-export { list, getPost, createPost, updatePost, deletePost };
+export default postsData;

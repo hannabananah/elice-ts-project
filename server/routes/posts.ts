@@ -5,7 +5,7 @@ import {
   createPost,
   updatePost,
   deletePost,
-} from "../models/post";
+} from "../service/postService";
 
 const { Router } = require("express");
 
@@ -28,7 +28,7 @@ router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.post("/", (req: Request, res: Response, next: NextFunction) => {
+router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   // 객체 하나씩 보내지 말고 req.body 채로 data를 넘긴다.
   // const { title, content } = req.body;
   const data = req.body;
@@ -37,13 +37,15 @@ router.post("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // patch로 요청 보낸 것은 patch로 받아야되는걸까나...(modify/index.txs line 26즈음 참고)
-router.patch("/:id", (req: Request, res: Response, next: NextFunction) => {
+router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
   const data = req.body;
 
   // patch에 대해서 공부하기
   try {
     const post = updatePost(data);
+    console.log("-----data----", data);
+    console.log("-----id----", id);
     res.json(post);
   } catch (e) {
     next(e);
@@ -58,6 +60,7 @@ router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
   try {
     deletePost(id);
+    res.status(200);
     res.json({ result: "success" });
     console.log("success");
   } catch (e) {
