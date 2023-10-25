@@ -1,12 +1,26 @@
 import { Request, Response } from "express";
 import { router as postsRouter } from "./Routes/posts";
-
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-
+const { MONGO_USER, MONGO_PASS } = process.env;
+const mongoose = require("mongoose");
 const app = express();
 
 app.use(express.json());
+
+// 몽고 연결
+mongoose
+  .connect(
+    `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.eribjyc.mongodb.net/?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => {
+    console.log("연결됨");
+  })
+  .catch((err:any) => {
+    console.log(err);
+  });
 
 // CORS 설정을 전역으로 해줌
 // put, delete : CORS를 일부러 걸어놓음 -> 그래서 이걸 따로 설정해줘야함(요청을 put, delete로 보내는 경우 CORS 정책 적용 안하도록)
