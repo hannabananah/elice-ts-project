@@ -1,10 +1,24 @@
-import React, { FC } from "react";
-import AppRouter from "./screens/AppRouter";
+import { BrowserRouter as Router } from 'react-router-dom';
 
-const App: FC = () => {
+import AppRouter from "./AppRouter";
+import Header from './components/Header';
+import { CssBaseline } from '@mui/material';
+
+import { Box } from "@mui/material";
+
+function App() {
+
   return (
     <>
-      <AppRouter />
+      <Router>
+        <CssBaseline />
+        <Box height="100vh">
+
+          <Header />
+          <AppRouter />
+
+        </Box>
+      </Router>
     </>
   );
 }

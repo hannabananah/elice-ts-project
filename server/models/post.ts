@@ -34,7 +34,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 5,
     uid: "bbbdfgdfgfdgfdgb",
     title: "third note",
     content: "My third note is here.",
@@ -42,7 +42,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 6,
     uid: "1111",
     title: "third note",
     content: "My third note is here.",
@@ -50,7 +50,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 7,
     uid: "3333",
     title: "third note",
     content: "My third note is here.",
@@ -58,7 +58,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 8,
     uid: "bbb4444bb",
     title: "third note",
     content: "My third note is here.",
@@ -66,7 +66,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 9,
     uid: "555",
     title: "third note",
     content: "My third note is here.",
@@ -74,7 +74,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 10,
     uid: "666",
     title: "third note",
     content: "My third note is here.",
@@ -82,7 +82,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 11,
     uid: "777",
     title: "third note",
     content: "My third note is here.",
@@ -90,7 +90,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 12,
     uid: "8888",
     title: "third note",
     content: "My third note is here.",
@@ -98,7 +98,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 13,
     uid: "999",
     title: "third note",
     content: "My third note is here.",
@@ -106,7 +106,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 14,
     uid: "00606",
     title: "third note",
     content: "My third note is here.",
@@ -114,7 +114,7 @@ let posts = [
     updatedAt: "20231022",
   },
   {
-    id: 3,
+    id: 15,
     uid: "4645",
     title: "third note",
     content: "My third note is here.",
@@ -134,7 +134,7 @@ const list = () => {
   }));
 };
 
-const getPost = (id: Number) => {
+const getPost = async (id: Number) => {
   const note = posts.find((x) => x.id === id);
 
   if (!note) {
@@ -157,16 +157,20 @@ const createPost = (post: Post): Post => {
   return newPost;
 };
 
-const updatePost = (post: Post) => {
-  const index = posts.findIndex((x) => x.id === post.id);
-
+// request body에 update data를 받아서 데이터가 저장되어 있는 곳의 정보를 업데이트
+const updatePost = (post: Omit<Post, "createdAt">) => {
+  // 1. update될 항목을 찾는다.
+  const index = posts.findIndex((x) => x.id === Number(post.id));
+  console.log(post);
   if (index < 0) {
     throw new Error("Post not found for update");
   }
+  // 2. 해당 항목을 받아온 데이터로 바꾼다.
   const note = posts[index];
+  note.id = Number(post.id);
+  note.uid = post.uid;
   note.title = post.title;
   note.content = post.content;
-  note.createdAt = post.createdAt;
   note.updatedAt = post.updatedAt;
 
   posts[index] = note;
@@ -174,12 +178,12 @@ const updatePost = (post: Post) => {
 };
 
 const deletePost = (id: Number) => {
+  // 일치하는 아이디값이 없으면 에러
   if (!posts.some((x) => x.id === id)) {
     throw new Error("Post not found for delete");
   }
-
+  // 일치하지 않는 데이터들만 남음
   posts = posts.filter((x) => x.id !== id);
-
   return;
 };
 

@@ -13,11 +13,13 @@ app.use(express.json());
 // 그래서 그냥 전역으로 설정해서 다 통과되게 함.
 // (정확하지 않음)
 app.use(
-  cors({
-    origin: "*",
-    optionsSuccessStatus: 200,
-    Credentials: true, // 응답 헤더에 Access-Control-Allow-Credentials 추가
-  })
+  cors()
+  // 없어도 됨(기본값)
+  //   {
+  //   origin: "*",
+  //   optionsSuccessStatus: 200,
+  //   Credentials: true, // 응답 헤더에 Access-Control-Allow-Credentials 추가
+  // }
 );
 
 app.use("/posts", postsRouter);
