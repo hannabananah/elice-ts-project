@@ -13,22 +13,22 @@ const Loader = (Component: any) => (props: any) =>
 );
 
 // 첫진입 시 보이는 로그인 창
-const Main = Loader(lazy(() => import("./screens/Main.tsx")));
+const Main = Loader(lazy(() => import("./components/Main.tsx")));
 // pages
-const BoardList = Loader(lazy(() => import("./screens/board/list/index")));
+const BoardList = Loader(lazy(() => import("./components/BoardList.tsx")));
 // 글 작성 페이지
-const BoardCreate = Loader(lazy(() => import("./screens/board/create/index")));
+const BoardCreate = Loader(lazy(() => import("./components/BoardCreate.tsx")));
 // 글 상세 페이지
-const BoardDetail = Loader(lazy(() => import("./screens/board/detail/index")));
+const BoardDetail = Loader(lazy(() => import("./components/BoardDetail.tsx")));
 // 글 수정 페이지
-const BoardModify = Loader(lazy(() => import("./screens/board/modify/index")));
+const BoardModify = Loader(lazy(() => import("./components/BoardModify.tsx")));
 
 // Status
 const Status404 = Loader(
-    lazy(() => import('./screens/status/404.tsx'))
+    lazy(() => import('./errorPages/404.tsx'))
 );
 const Status500 = Loader(
-    lazy(() => import('./screens/status/500.tsx'))
+    lazy(() => import('./errorPages/500.tsx'))
 );
 
 export default function AppRouter() {
@@ -60,22 +60,18 @@ export default function AppRouter() {
         {
             path: 'posts/modify/:id',
             element: <BoardModify />,
-        }, {
+        },
+        {
             path: '*',
-            children: [
-                {
-                    path: '',
-                    element: <Navigate to="404" replace />
-                },
-                {
-                    path: '404',
-                    element: <Status404 />
-                },
-                {
-                    path: '500',
-                    element: <Status500 />
-                },
-            ]
+            element: <Navigate to="/error/404" replace />
+        },
+        {
+            path: '/error/404',
+            element: <Status404 />
+        },
+        {
+            path: '/error/500',
+            element: <Status500 />
         },
 
     ]);

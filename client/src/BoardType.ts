@@ -5,4 +5,5 @@ export type BoardType = {
   content: string;
   createdAt: string;
   updatedAt: string | null;
+  pageIndex?: number;
 };

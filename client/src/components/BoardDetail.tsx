@@ -28,6 +28,7 @@ const BoardDetail = () => {
         axios.get(`http://localhost:3003/posts/${params}`)
             .then((res) => {
                 setDetailPost(res.data)
+                console.log("-----", res)
             })
 
             .catch(function (error) {
@@ -102,7 +103,7 @@ const BoardDetail = () => {
                 >
                     <Box width="60%" >
                         <Grid sx={{ marginTop: 2 }} item xs={6}>
-                            <Typography variant="h5" sx={{ mb: 10 }}>게시글 작성하기</Typography>
+                            <Typography variant="h5" sx={{ mb: 10 }}>게시글 상세보기</Typography>
                         </Grid>
                         <Grid container item sm={10} md={10} lg={10} spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -113,7 +114,7 @@ const BoardDetail = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>
-                                    작성자  :  {detailPost.id}
+                                    작성자  :  {detailPost.uid}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>

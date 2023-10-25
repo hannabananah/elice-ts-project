@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { BoardType } from '~/interface/BoardType';
+import { BoardType } from '~/BoardType';
 import Pagination from "react-js-pagination";
 import { useNavigate } from 'react-router-dom';
+import { getPostAll } from '../api/fetch'
 
 const BoardList = () => {
     const navigate = useNavigate();
@@ -22,8 +23,9 @@ const BoardList = () => {
     useEffect(() => {
         async function fetchData() {
             setLoading(true)
-            await axios.get('http://localhost:3003/posts').then((res) => {
-                setDataList([...res.data].reverse())
+            await getPostAll().then((res) => {
+                console.log(res)
+                setDataList([...res].reverse())
                 setLoading(false)
             })
                 .catch(function (error) {
@@ -32,15 +34,13 @@ const BoardList = () => {
         }
         fetchData()
     }, [])
-    const indexOfLastPost: number = page * postPerPage
-    const indexOfFirstPost: number = indexOfLastPost - postPerPage
 
     // 오류 해결해야 index 제대로 나올듯함
     useEffect(() => {
+        const indexOfLastPost: number = page * postPerPage
+        const indexOfFirstPost: number = indexOfLastPost - postPerPage
         setCurrentPost(dataList.slice(indexOfFirstPost, indexOfLastPost));
     }, [dataList, page]);
-
-
 
     // 글 작성페이지로 이동
     const gotoWrite = () => {
@@ -81,7 +81,7 @@ const BoardList = () => {
                                 currentPost && currentPost.map((board, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{index + 1}</td>
+                                            <td>{board.pageIndex}</td>
                                             <td>{board.uid}</td>
                                             <td><Link to={`/posts/${board.id}`}>{board.title}</Link></td>
                                             <td>{board.content}</td>

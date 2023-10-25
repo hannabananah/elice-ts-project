@@ -26,7 +26,6 @@ const BoardModify = () => {
     let uid = modifyBoardData.uid
     const formSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        console.log('보내기')
         if (title.length === 0) {
             alert('제목을 입력해 주세요.')
         } else if (content.length === 0) {
@@ -44,19 +43,14 @@ const BoardModify = () => {
                         alert('게시글이 수정되었습니다.')
                         navigate('/posts')
                     })
-
                     .catch(function (error) {
-                        navigate('/error/400')
+                        navigate('/error/404')
                         console.log(error)
                     })
             } else {
                 return false
             }
         }
-    }
-
-    const refresh = () => {
-        window.location.reload();
     }
 
     const formCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -74,12 +68,13 @@ const BoardModify = () => {
             .then((res) => {
                 setModifyBoardData(res.data)
             })
-
             .catch(function (error) {
-                navigate('/error/400')
-                console.log(error)
+                if (error.code === "ERR_NETWORK") {
+                    navigate('/error/500')
+                }
+                console.log("error", error)
             })
-    }, [params, navigate])
+    }, [])
 
 
     // react hook 배우기

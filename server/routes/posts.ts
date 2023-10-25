@@ -5,7 +5,7 @@ import {
   createPost,
   updatePost,
   deletePost,
-} from "../service/postService";
+} from "../models/post";
 
 const { Router } = require("express");
 
@@ -17,11 +17,13 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.json(posts);
 });
 
-router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
+// 특정 유저 게시물 상세보기
+router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
 
   try {
-    const post = getPost(id);
+    const post = await getPost(id);
+    console.log(post);
     res.json(post);
   } catch (e) {
     next(e);
@@ -44,8 +46,6 @@ router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
   // patch에 대해서 공부하기
   try {
     const post = updatePost(data);
-    console.log("-----data----", data);
-    console.log("-----id----", id);
     res.json(post);
   } catch (e) {
     next(e);
@@ -56,12 +56,13 @@ router.put("/:id", (req: Request, res: Response, next: NextFunction) => {
 // params으로 request 보냄
 // api 정의하는 방법은 따로 학습 필요
 router.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
-  //  qeury/body/params 중 어떤 방식으로 req가 들어오는지 우선적으로 확인하기
+  //  query/body/params 중 어떤 방식으로 req가 들어오는지 우선적으로 확인하기
   const id = Number(req.params.id);
   try {
-    deletePost(id);
+    const data = deletePost(id);
     res.status(200);
-    res.json({ result: "success" });
+    res.json(data);
+    // res.json({ result: "success" });
     console.log("success");
   } catch (e) {
     next(e);
