@@ -5,6 +5,7 @@ import Header from './components/Header';
 import { CssBaseline } from '@mui/material';
 
 import { Box } from "@mui/material";
+import "./App.css";
 
 function App() {
 
@@ -12,8 +13,7 @@ function App() {
     <>
       <Router>
         <CssBaseline />
-        <Box height="100vh">
-
+        <Box className="container">
           <Header />
           <AppRouter />
 

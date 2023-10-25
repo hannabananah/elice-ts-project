@@ -6,10 +6,11 @@ import {
     Box,
     Container,
     AppBar,
-    Typography
 } from "@mui/material";
+
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import "./Board.css"
 
 const BoardCreate = () => {
     // hook
@@ -39,7 +40,6 @@ const BoardCreate = () => {
                     .then(function (res) {
                         alert('게시글이 등록되었습니다.')
                         navigate('/posts')
-                        console.log('등록성공')
                     })
 
                     .catch(function (error) {
@@ -74,22 +74,15 @@ const BoardCreate = () => {
 
 
     return (
-        <Container component="main">
+        <Container component="main" className="board-page-layout">
             <Box
-                flex={1}
                 component="form"
                 noValidate
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="96vh"
-                flexDirection="column"
+                className="box-container"
             >
-                <Box width="60%">
-                    <Grid sx={{ marginTop: 2 }} item xs={6}>
-                        <Typography variant="h5" sx={{ mb: 10 }}>게시글 작성하기</Typography>
-                    </Grid>
-                    <Grid container item sm={10} md={10} lg={10} spacing={2}>
+                <h2 className="table-title">게시글 작성하기</h2>
+                <div className="input-layout">
+                    <Grid container item sm={10} md={10} lg={10} spacing={3}>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 placeholder={"작성자의 이름을 입력해주세요."}
@@ -100,12 +93,8 @@ const BoardCreate = () => {
                                 label="작성자 이름 *"
                                 autoFocus
                                 value={uid}
-                                // error={Boolean(nameError)}
                                 onChange={(e) => setUid(e.target.value)}
                             />
-                            <Typography style={{ color: "#bd1c1c" }}>
-                                {/* {nameError} */}
-                            </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -116,13 +105,9 @@ const BoardCreate = () => {
                                 name="title"
                                 autoComplete="title"
                                 value={title}
-                                // error={Boolean(titleError)}
                                 onChange={(e) => setTitle(e.target.value)}
                                 sx={{ borderColor: "red" }}
                             />
-                            <Typography style={{ color: "#bd1c1c" }}>
-                                {/* {titleError} */}
-                            </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -135,47 +120,41 @@ const BoardCreate = () => {
                                 multiline={true}
                                 rows={7}
                                 value={content}
-                                // error={Boolean(messageError)}
                                 onChange={(e) => setContent(e.target.value)}
                                 style={{ marginBottom: 10 }}
                             />
-                            <Typography style={{ color: "#bd1c1c" }}>
-                                {/* {messageError} */}
-                            </Typography>
                         </Grid>
                     </Grid>
-                    <AppBar
-                        position="fixed"
-                        color="default"
-                        sx={{ top: "auto", bottom: 0 }}
-                    >
-                        <Grid item container direction="row" justifyContent="flex-end">
-                            <Grid item>
-                                <Button
-                                    onClick={formCancel}
-                                    type="button"
-                                    variant="outlined"
-                                    sx={{ mt: 2, mb: 2, mr: 2 }}
-                                >
-                                    취소
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Button
-                                    onClick={formSubmit}
-                                    variant="contained"
-                                    sx={{ mt: 2, mb: 2, mr: 10 }}
-                                    disabled={disabledButton}
-                                >
-                                    저장
-                                </Button>
-                            </Grid>
+                </div>
+                <AppBar
+                    position="fixed"
+                    color="default"
+                    sx={{ top: "auto", bottom: 0 }}
+                >
+                    <Grid item container direction="row" justifyContent="flex-end">
+                        <Grid item>
+                            <Button
+                                onClick={formCancel}
+                                type="button"
+                                variant="outlined"
+                                sx={{ mt: 2, mb: 2, mr: 2 }}
+                            >
+                                취소
+                            </Button>
                         </Grid>
-                    </AppBar>
-                </Box>
-            </Box>
-        </Container >
-
+                        <Grid item>
+                            <Button
+                                onClick={formSubmit}
+                                variant="contained"
+                                sx={{ mt: 2, mb: 2, mr: 10 }}
+                                disabled={disabledButton}
+                            >
+                                저장
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </AppBar>
+            </Box ></Container >
     )
 }
 

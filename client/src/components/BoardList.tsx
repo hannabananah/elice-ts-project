@@ -4,8 +4,7 @@ import dayjs from 'dayjs'
 import { BoardType } from '~/BoardType';
 import { useNavigate } from 'react-router-dom';
 import { getPostAll } from '../api/fetch'
-import "./Paging.css"
-import Box, { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -23,29 +22,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
-function Item(props: BoxProps) {
-    const { sx, ...other } = props;
-    return (
-        <Box
-            sx={{
-                p: 1,
-                m: 1,
-                bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : 'grey.100'),
-                color: (theme) => (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800'),
-                border: '1px solid',
-                borderColor: (theme) =>
-                    theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-                borderRadius: 2,
-                fontSize: '0.875rem',
-                fontWeight: '700',
-                ...sx,
-            }}
-            {...other}
-        />
-    );
-}
-
+import "./Board.css"
 
 interface TablePaginationActionsProps {
     count: number;
@@ -114,32 +91,35 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 const BoardList = () => {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false)
     const [dataList, setDataList] = useState<BoardType[]>([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
     const currentPost = dataList.slice(startIndex, endIndex);
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, dataList.length - startIndex);
     const boardLength = dataList.length
 
-    const handleChangePage = (e: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    const emptyRows =
+        page > 0 ? Math.max(0, rowsPerPage - setDataList.length) : 0;
+
+    const handleChangePage = (
+        e: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChangeRowsPerPage = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
         setRowsPerPage(parseInt(e.target.value, 10));
         setPage(0);
     };
 
     useEffect(() => {
         async function fetchData() {
-            setLoading(true)
             await getPostAll().then((res) => {
-                console.log(res)
                 setDataList([...res].reverse())
-                setLoading(false)
             })
                 .catch(function (error) {
                     console.log(error)
@@ -154,82 +134,78 @@ const BoardList = () => {
         navigate('/write');
     };
 
-    return (<>
-        {
-            loading ?
-                <h2>...loading</h2> :
-                <><h1>Board list</h1>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            p: 1,
-                            m: 1,
-                            bgcolor: 'background.paper',
-                            borderRadius: 1,
-                        }}
-                    >
-                        <Item><Typography>Total post : {boardLength}</Typography></Item>
-                        <Button variant="outlined" size="small" sx={{ height: '25%' }} onClick={gotoWrite}>글쓰기</Button>
-                    </Box>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>목록</TableCell>
-                                    <TableCell>작성자명</TableCell>
-                                    <TableCell>제목</TableCell>
-                                    <TableCell>내용</TableCell>
-                                    <TableCell>등록일시</TableCell>
-                                    <TableCell>수정일시</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {(rowsPerPage > 0
-                                    ? dataList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    : currentPost && currentPost
-                                ).map((board, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{board.pageIndex}</TableCell>
-                                        <TableCell>{board.uid}</TableCell>
-                                        <TableCell><Link to={`/posts/${board.id}`}>{board.title}</Link></TableCell>
-                                        <TableCell>{board.content}</TableCell>
-                                        <TableCell>{dayjs(board.createdAt).format('YYYY.MM.DD')}</TableCell>
-                                        <TableCell>{dayjs(board.updatedAt).format('YYYY.MM.DD')}</TableCell>
-                                    </TableRow>
-                                ))}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 53 * emptyRows }}>
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                        colSpan={6}
-                                        count={dataList.length}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        SelectProps={{
-                                            inputProps: {
-                                                'aria-label': 'rows per page',
-                                            },
-                                            native: true,
-                                        }}
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </TableContainer>
-                </>
-        }
-    </>
+    return (
+        <><div className='board-page-layout'>
+            <h1>게시판</h1>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    p: 1,
+                    m: 0,
+                    borderRadius: 1,
+                }}
+            >
+                <Typography>총 게시물 수 : {boardLength}개</Typography>
+                <Button variant="contained" size="small" onClick={gotoWrite}>글쓰기</Button>
+            </Box>
+            <TableContainer component={Paper} className='table-container'>
+                <Table sx={{ minWidth: 500 }}>
+                    <TableHead className='table-head'>
+                        <TableRow>
+                            <TableCell align='center' className="table-cell-index">목록</TableCell>
+                            <TableCell className="table-cell-author">작성자명</TableCell>
+                            <TableCell className="table-cell-title">제목</TableCell>
+                            <TableCell className="table-cell-content">내용</TableCell>
+                            <TableCell className="table-cell-date">등록일시</TableCell>
+                            <TableCell className="table-cell-date">수정일시</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {(rowsPerPage > 0
+                            ? dataList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : currentPost && currentPost
+                        ).map((board, index) => (
+                            <TableRow key={index}>
+                                <TableCell align='center' className="table-cell-index">{board.pageIndex}</TableCell>
+                                <TableCell className="table-cell-author">{board.uid}</TableCell>
+                                <TableCell className="table-cell-title"><Link className="link" to={`/posts/${board.id}`}>{board.title}</Link></TableCell>
+                                <TableCell className="table-cell-content">{board.content}</TableCell>
+                                <TableCell className="table-cell-date">{dayjs(board.createdAt).format('YYYY.MM.DD')}</TableCell>
+                                <TableCell className="table-cell-date">{dayjs(board.updatedAt).format('YYYY.MM.DD')}</TableCell>
+                            </TableRow>
+                        ))}
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 53 * emptyRows }}>
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                colSpan={6}
+                                count={dataList.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                SelectProps={{
+                                    inputProps: {
+                                        'aria-label': '페이지당 게시물 수',
+                                    },
+                                    native: true,
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </TableContainer>
+        </div>
+        </>
     )
 }
 

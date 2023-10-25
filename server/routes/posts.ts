@@ -127,7 +127,6 @@ router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
 
 //   try {
 //     const post = await getPost(id);
-//     console.log(post);
 //     res.json(post);
 //   } catch (e) {
 //     next(e);
