@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { router as postsRouter } from "./Routes/posts";
 require("dotenv").config();
 const express = require("express");
@@ -46,8 +46,8 @@ app.use((req: Request, res: Response) => {
   });
   console.log("404에러 발생");
 });
-
-app.use((err: Error, req: Request, res: Response) => {
+// error -> next(err) 통해서 옴
+app.use((err: Error, req: Request, res: Response, next:NextFunction) => {
   res.status(500);
 
   res.json({
