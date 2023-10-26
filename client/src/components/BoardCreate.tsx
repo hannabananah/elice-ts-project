@@ -70,9 +70,6 @@ const BoardCreate = () => {
         } else setDisabledButton(true);
     }, [uid, title, content]);
 
-
-
-
     return (
         <Container component="main" className="board-page-layout">
             <Box

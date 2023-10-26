@@ -98,7 +98,8 @@ const BoardList = () => {
     const endIndex = startIndex + rowsPerPage;
     const currentPost = dataList.slice(startIndex, endIndex);
     const boardLength = dataList.length
-
+    // 받아올 update가 없으면 false
+    const [initCreated, setInitCreated] = useState<boolean>(false)
     const emptyRows =
         page > 0 ? Math.max(0, rowsPerPage - setDataList.length) : 0;
 
@@ -115,25 +116,25 @@ const BoardList = () => {
         setRowsPerPage(parseInt(e.target.value, 10));
         setPage(0);
     };
-
     useEffect(() => {
         async function fetchData() {
             await getPostAll().then((res) => {
-                setDataList([...res].reverse())
+                const reversedData = [...res].reverse();
+                setDataList(reversedData);
+                const hasUpdated = reversedData.some((board) => board.updatedAt);
+                setInitCreated(hasUpdated); // 이 부분에서 setInitCreated를 호출하여 initCreated 값을 설정합니다.
             })
                 .catch(function (error) {
-                    console.log(error)
-                })
+                    console.log(error);
+                });
         }
-        fetchData()
-    }, [])
-
+        fetchData();
+    }, []);
 
     // 글 작성페이지로 이동
     const gotoWrite = () => {
         navigate('/write');
     };
-
     return (
         <><div className='board-page-layout'>
             <h1>게시판</h1>
@@ -173,7 +174,11 @@ const BoardList = () => {
                                 <TableCell className="table-cell-title"><Link className="link" to={`/posts/${board.id}`}>{board.title}</Link></TableCell>
                                 <TableCell className="table-cell-content">{board.content}</TableCell>
                                 <TableCell className="table-cell-date">{dayjs(board.createdAt).format('YYYY.MM.DD')}</TableCell>
-                                <TableCell className="table-cell-date">{dayjs(board.updatedAt).format('YYYY.MM.DD')}</TableCell>
+                                <TableCell className="table-cell-date">{' '}
+                                    {initCreated ? (
+                                        board.updatedAt ? dayjs(board.updatedAt).format('YYYY.MM.DD') : null
+                                    ) : null}
+                                </TableCell>
                             </TableRow>
                         ))}
                         {emptyRows > 0 && (

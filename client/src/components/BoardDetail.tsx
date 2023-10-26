@@ -9,12 +9,12 @@ import {
     Container,
     AppBar,
 } from "@mui/material";
+import "./Board.css"
 
 const BoardDetail = () => {
     // hook
     const params = useParams().id;
     const navigate = useNavigate()
-
 
     // state(any 수정해야함)
     const [detailPost, setDetailPost] = useState<any>([])
@@ -24,7 +24,6 @@ const BoardDetail = () => {
             .then((res) => {
                 setDetailPost(res.data)
             })
-
             .catch(function (error) {
                 console.log(error)
             })
@@ -48,7 +47,6 @@ const BoardDetail = () => {
             return false
         }
     }
-
 
     return (
         <>

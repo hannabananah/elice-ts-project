@@ -52,14 +52,6 @@ export default function AppRouter() {
             element: <BoardModify />,
         },
         {
-            path: 'posts/modify/:id',
-            element: <BoardModify />,
-        },
-        {
-            path: 'posts/modify/:id',
-            element: <BoardModify />,
-        },
-        {
             path: '*',
             element: <Navigate to="/error/404" replace />
         },

@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
-import Img404 from '../styles/images/404.svg';
+import Img404 from '../images/404.svg';
 const MainContent = styled(Box)(
     ({ theme }) => `
       height: 100%;
@@ -19,7 +19,6 @@ const MainContent = styled(Box)(
       justify-content: center;
   `
 );
-
 
 function Status404() {
     return (

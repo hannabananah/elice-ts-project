@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import RefreshTwoToneIcon from '@mui/icons-material/RefreshTwoTone';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Img500 from "../styles/images/500.svg"
+import Img500 from "../images/500.svg"
 import { styled } from '@mui/material/styles';
 
 
