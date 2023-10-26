@@ -72,7 +72,6 @@ const BoardModify = () => {
                 if (error.code === "ERR_NETWORK") {
                     navigate('/error/500')
                 }
-                console.log("error", error)
             })
     }, [])
 
@@ -91,37 +90,25 @@ const BoardModify = () => {
     }, [modifyBoardData.content])
 
 
-
     return (
-        <Container component="main">
+        <Container component="main" className="board-page-layout">
             <Box
-                flex={1}
                 component="form"
                 noValidate
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="96vh"
-                flexDirection="column"
+                className="box-container"
             >
-                <Box width="60%">
-                    <Grid sx={{ marginTop: 2 }} item xs={6}>
-                        <Typography variant="h5" sx={{ mb: 10 }}>게시글 수정하기</Typography>
-                    </Grid>
-                    <Grid container item sm={10} md={10} lg={10} spacing={2}>
+                <h2 className="table-title">게시글 수정하기</h2>
+                <div className="input-layout">
+                    <Grid container item sm={10} md={10} lg={10} spacing={3}>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 name="name"
                                 fullWidth
                                 id="name"
-                                // label="작성자 이름 *"
-                                value={uid}
+                                // undefined에서 useEffect 이후에 값이 들어가면 발생하는 에러로 value={uid}가 아닌 ''의 경우에도 값을 받도록 추가함
+                                value={uid || ''}
                                 disabled
-                            // error={Boolean(nameError)}
                             />
-                            <Typography style={{ color: "#bd1c1c" }}>
-                                {/* {nameError} */}
-                            </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -130,16 +117,11 @@ const BoardModify = () => {
                                 id="title"
                                 label="제목 *"
                                 name="title"
-                                autoFocus
                                 autoComplete="title"
                                 value={title || ""}
-                                // error={Boolean(titleError)}
                                 onChange={(e) => setTitle(e.target.value)}
                                 sx={{ borderColor: "red" }}
                             />
-                            <Typography style={{ color: "#bd1c1c" }}>
-                                {/* {titleError} */}
-                            </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -152,47 +134,40 @@ const BoardModify = () => {
                                 multiline={true}
                                 rows={7}
                                 value={content || ""}
-                                // error={Boolean(messageError)}
                                 onChange={(e) => setContent(e.target.value)}
                                 style={{ marginBottom: 10 }}
                             />
-                            <Typography style={{ color: "#bd1c1c" }}>
-                                {/* {messageError} */}
-                            </Typography>
                         </Grid>
                     </Grid>
-                    <AppBar
-                        position="fixed"
-                        color="default"
-                        sx={{ top: "auto", bottom: 0 }}
-                    >
-                        <Grid item container direction="row" justifyContent="flex-end">
-                            <Grid item>
-                                <Button
-                                    onClick={formCancel}
-                                    type="button"
-                                    variant="outlined"
-                                    sx={{ mt: 2, mb: 2, mr: 2 }}
-                                >
-                                    취소
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Button
-                                    onClick={formSubmit}
-                                    variant="contained"
-                                    sx={{ mt: 2, mb: 2, mr: 10 }}
-                                // disabled={disabledButton}
-                                >
-                                    저장
-                                </Button>
-                            </Grid>
+                </div>
+                <AppBar
+                    position="fixed"
+                    color="default"
+                    sx={{ top: "auto", bottom: 0 }}
+                >
+                    <Grid item container direction="row" justifyContent="flex-end">
+                        <Grid item>
+                            <Button
+                                onClick={formCancel}
+                                type="button"
+                                variant="outlined"
+                                sx={{ mt: 2, mb: 2, mr: 2 }}
+                            >
+                                취소
+                            </Button>
                         </Grid>
-                    </AppBar>
-                </Box>
-            </Box>
-        </Container >
-
+                        <Grid item>
+                            <Button
+                                onClick={formSubmit}
+                                variant="contained"
+                                sx={{ mt: 2, mb: 2, mr: 10 }}
+                            >
+                                저장
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </AppBar>
+            </Box ></Container >
     )
 }
 

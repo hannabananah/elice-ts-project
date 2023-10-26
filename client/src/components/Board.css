@@ -1,0 +1,102 @@
+.board-page-layout {
+  width: 840px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.table-container {
+  max-height: 600px;
+}
+.table-cell-index {
+  width: 20px;
+}
+.table-cell-author {
+  max-width: 60px;
+  width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.table-cell-title {
+  max-width: 90px;
+  width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.table-cell-content {
+  max-width: 130px;
+  width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.table-cell-date {
+  width: 60px;
+  padding: 0;
+}
+.table-head {
+  background-color: rgba(226, 237, 249);
+}
+
+.link {
+  text-decoration: none;
+  color: #111;
+  font-weight: bold;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: #111;
+  font-weight: bold;
+}
+
+.box-container {
+  box-shadow: -1px 8px 15px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: -1px 8px 15px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: -1px 8px 15px 0px rgba(0, 0, 0, 0.2);
+  background-color: #fefefe;
+  padding: 20px 6px 32px;
+  border-radius: 16px;
+}
+
+.table-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.input-layout {
+  display: flex;
+  justify-content: center;
+}
+
+.table-label {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.detail-layout {
+  margin: 0 60px;
+}
+.table-detail-title {
+  height: 90px;
+  border-bottom: 1px solid #ccc;
+}
+.table-detail-author {
+  height: 80px;
+  border-bottom: 1px solid #ccc;
+  padding-top: 8px;
+}
+.table-detail-content {
+  height: 280px;
+  padding-top: 8px;
+}
+.table-detail-contents {
+  overflow: hidden;
+  height: 100%;
+  padding-top: 10px;
+}
+.content-scroll {
+  overflow-y: auto;
+}

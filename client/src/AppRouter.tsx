@@ -1,9 +1,7 @@
-import React, { FC, Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { RouteObject } from 'react-router';
+import { Suspense, lazy } from "react";
 import { Navigate } from 'react-router-dom';
 import { useRoutes } from 'react-router-dom';
-import SuspenseLoader from './components/suspenseLoader/index';
+import SuspenseLoader from './components/suspenseLoader';
 
 const Loader = (Component: any) => (props: any) =>
 (
@@ -35,7 +33,7 @@ export default function AppRouter() {
     let element = useRoutes([
         {
             path: "/",
-            element: <Main />,
+            element: <Navigate to="/posts" replace />,
         },
         {
             path: 'posts',
@@ -78,70 +76,3 @@ export default function AppRouter() {
 
     return element;
 }
-
-
-// const routes: RouteObject[] = [
-//     {
-//         path: '',
-//         element: <Main />,
-//         children: [
-//             {
-//                 path: '/',
-//                 element: <BoardList />
-//             },
-//             {
-//                 path: 'posts',
-//                 element: <Navigate to="/" replace />,
-//             },
-//             {
-//                 path: 'status',
-//                 children: [
-//                     {
-//                         path: '',
-//                         element: <Navigate to="404" replace />
-//                     },
-//                     {
-//                         path: '404',
-//                         element: <Status404 />
-//                     },
-//                     {
-//                         path: '500',
-//                         element: <Status500 />
-//                     },
-//                 ]
-//             },
-//             {
-//                 path: '*',
-//                 element: <Status404 />
-//             }
-//         ]
-//     },
-//     {
-//         path: 'posts',
-//         children: [
-//             {
-//                 path: '',
-//                 element: <Navigate to="posts" replace />
-//             },
-//             {
-//                 path: 'modify',
-//                 element: <BoardModify />
-//             },
-//         ]
-//     },
-//     {
-//         path: 'write',
-//         children: [
-//             {
-//                 path: '',
-//                 element: <Navigate to=":id" replace />
-//             },
-//             {
-//                 path: ':id',
-//                 element: <BoardCreate />
-//             },
-//         ]
-//     },
-// ];
-
-

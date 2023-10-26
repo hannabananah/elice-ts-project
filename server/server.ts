@@ -58,5 +58,5 @@ app.use((err: Error, req: Request, res: Response, next:NextFunction) => {
 });
 
 app.listen(3003, () => {
-  console.log("3001번 포트에서 서버가 실행되었습니다!");
+  console.log("3003번 포트에서 서버가 실행되었습니다!");
 });
