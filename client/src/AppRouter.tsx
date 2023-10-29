@@ -12,7 +12,7 @@ const Loader = (Component: any) => (props: any) =>
 
 // 첫진입 시 보이는 로그인 창
 const Main = Loader(lazy(() => import("./components/Main.tsx")));
-// pages
+// 글 리스트 페이지
 const BoardList = Loader(lazy(() => import("./components/BoardList.tsx")));
 // 글 작성 페이지
 const BoardCreate = Loader(lazy(() => import("./components/BoardCreate.tsx")));
@@ -63,7 +63,6 @@ export default function AppRouter() {
             path: '/error/500',
             element: <Status500 />
         },
-
     ]);
 
     return element;

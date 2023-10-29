@@ -1,34 +1,29 @@
-import mongoose from "mongoose";
-import { Post } from "../../types/index";
-const { Schema } = mongoose;
+const { Schema } = require("mongoose");
 
-// id: Number, uid, title,content, createdAt, updateAt 의 type은 String이며 필수로 들어가야하는 값
-let posts = new Schema ({
+export {};
+const PostSchema = new Schema({
   id: {
-    // 변경사항
     type: String,
-    required: false,
   },
-      uid:{
+  uid: {
     type: String,
     required: true,
   },
-      title: {
+  title: {
     type: String,
     required: true,
   },
-      content: {
+  content: {
     type: String,
     required: true,
   },
-      createdAt: {
-    type: String,
+  createdAt: {
+    type: Date,
     required: true,
   },
-      updatedAt: {
-    type: String,
-    required: false,
-  }
-})
+  updatedAt: {
+    type: Date,
+  },
+});
 
-   module.exports = mongoose.model("posts",posts);
+module.exports = PostSchema;

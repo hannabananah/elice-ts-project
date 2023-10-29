@@ -1,4 +1,5 @@
+export {};
 const mongoose = require("mongoose");
-const BookSchema = require("./schemas/book");
+const PostSchema = require("./schemas/post");
 
-exports.Book = mongoose.model("Book", BookSchema);
+exports.Post = mongoose.model("Post", PostSchema);

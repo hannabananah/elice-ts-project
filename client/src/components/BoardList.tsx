@@ -100,8 +100,6 @@ const BoardList = () => {
     const boardLength = dataList.length
     // 받아올 update가 없으면 false
     const [initCreated, setInitCreated] = useState<boolean>(false)
-    const emptyRows =
-        page > 0 ? Math.max(0, rowsPerPage - setDataList.length) : 0;
 
     const handleChangePage = (
         e: React.MouseEvent<HTMLButtonElement> | null,
@@ -122,9 +120,9 @@ const BoardList = () => {
                 const reversedData = [...res].reverse();
                 setDataList(reversedData);
                 const hasUpdated = reversedData.some((board) => board.updatedAt);
-                setInitCreated(hasUpdated); // 이 부분에서 setInitCreated를 호출하여 initCreated 값을 설정합니다.
+                setInitCreated(hasUpdated);
             })
-                .catch(function (error) {
+                .catch((error)=> {
                     console.log(error);
                 });
         }

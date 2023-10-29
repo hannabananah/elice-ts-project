@@ -1,97 +1,87 @@
-import { Post } from "./../types/index";
-import { Request, Response, NextFunction } from "express";
-
 const { Router } = require("express");
+import { Request, Response, NextFunction } from "express";
+const { Post } = require("../models");
+import { PostType } from "../types";
+
 const router = Router();
 
-const Posts = require("../models/schemas/post");
+// 게시물 리스트
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const post = await Post.find({});
+    const newPost = post.map((post: PostType) => {
+      const obj = { ...post._doc };
+      return { ...obj, id: obj._id };
+    });
+    res.json(newPost);
+  } catch (e) {
+    next(e);
+  }
+});
 
+// 게시물 등록 ******
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   const { uid, content, title, createdAt } = req.body;
   try {
-    const post = new Posts({
+    const post = Post.create({
       uid,
       content,
       title,
       createdAt,
     });
-
-    post
-      .save()
-      .then((post: any) => {
-        res.json(post);
-      })
-      .catch((err: any) => {
-        res.status(500);
-      });
-  } catch (err) {
-    next(err);
+    res.json(post);
+  } catch (e) {
+    next(e);
   }
 });
 
-// Posts 목록 가져오기
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const posts = await Posts.find({});
-    const newPosts = posts.map((post: any) => {
-      const obj = { ...post._doc };
-      return { ...obj, id: obj._id };
-    });
-    res.json(newPosts);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// Posts 상세 보기
+// 게시물 상세
 router.get("/:_id", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const _id = req.params._id;
+    const { _id } = req.params;
 
-    const dePosts = await Posts.findOne({ _id: _id });
-    const obj = { ...dePosts._doc };
-    const newDePosts = { ...obj, id: obj._id };
-    res.json(newDePosts);
-  } catch (err) {
-    next(err);
+    const post = await Post.findOne({ _id: _id });
+    const obj = { ...post._doc };
+    const newPost = { ...obj, id: obj._id };
+    res.json(newPost);
+  } catch (e) {
+    next(e);
   }
 });
 
-// Posts 삭제하기
+// 게시물 삭제
 router.delete(
   "/:_id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const _id = req.params._id;
+      const { _id } = req.params;
 
-      const delPosts = await Posts.deleteOne({ _id: _id });
-      console.log(delPosts);
-      res.json(delPosts);
-    } catch (err) {
-      next(err);
+      const post = await Post.deleteOne({ _id: _id });
+      res.json(post);
+    } catch (e) {
+      next(e);
     }
   }
 );
 
-// Posts 수정하기
+// 게시물 수정
 router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const { uid, title, content, updatedAt } = req.body;
+    const { title, content, updatedAt } = req.body;
 
-    const modiPosts = await Posts.findOneAndUpdate(
+    const post = await Post.updateOne(
       { _id: id },
       {
-        uid,
         title,
         content,
         updatedAt,
       }
     );
-    res.json(modiPosts);
-  } catch (err) {
-    next(err);
+    res.json(post);
+  } catch (e) {
+    next(e);
   }
 });
 
-export { router };
+module.exports = router;
