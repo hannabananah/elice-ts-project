@@ -31,7 +31,7 @@ const BoardCreate = () => {
             alert('내용을 입력해 주세요.')
         } else {
             if (window.confirm('게시글을 등록하시겠습니까?')) {
-                axios.post('http://localhost:3003/posts', {
+                axios.post('http://localhost:3210/posts', {
                     uid: uid,
                     title: title,
                     content: content,

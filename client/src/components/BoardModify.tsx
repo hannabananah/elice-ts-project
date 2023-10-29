@@ -33,7 +33,7 @@ const BoardModify = () => {
             alert('내용을 입력해 주세요.')
         } else {
             if (window.confirm('게시글을 수정하시겠습니까?')) {
-                axios.put(`http://localhost:3003/posts/${params}`, {
+                axios.put(`http://localhost:3210/posts/${params}`, {
                     id: id,
                     uid: uid,
                     title: title,
@@ -65,7 +65,7 @@ const BoardModify = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3003/posts/${params}`)
+        axios.get(`http://localhost:3210/posts/${params}`)
             .then((res) => {
                 setModifyBoardData(res.data)
             })

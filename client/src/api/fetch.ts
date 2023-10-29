@@ -2,7 +2,7 @@ import axios from "axios";
 import { BoardType as Post } from "~/BoardType";
 
 export const getPostAll = () => {
-  return axios.get("http://localhost:3003/posts").then((res) => {
+  return axios.get("http://localhost:3210/posts").then((res) => {
     const posts = res.data;
     return posts.map((post: Post, index: number) => {
       const newPost = { ...post, pageIndex: index + 1 };

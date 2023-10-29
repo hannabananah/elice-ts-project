@@ -20,7 +20,7 @@ const BoardDetail = () => {
     const [detailPost, setDetailPost] = useState<any>([])
 
     useEffect(() => {
-        axios.get(`http://localhost:3003/posts/${params}`)
+        axios.get(`http://localhost:3210/posts/${params}`)
             .then((res) => {
                 setDetailPost(res.data)
             })
@@ -33,7 +33,7 @@ const BoardDetail = () => {
         e.preventDefault()
 
         if (window.confirm('게시글을 삭제하시겠습니까?')) {
-            await axios.delete(`http://localhost:3003/posts/${params}`).then((res) => {
+            await axios.delete(`http://localhost:3210/posts/${params}`).then((res) => {
                 const status = res.status;
                 if (status === 200) {
                     navigate('/posts')
