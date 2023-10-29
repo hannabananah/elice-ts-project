@@ -181,26 +181,15 @@ const BoardList = () => {
                                 </TableCell>
                             </TableRow>
                         ))}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={6} />
-                            </TableRow>
-                        )}
                     </TableBody>
                     <TableFooter>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                colSpan={6}
                                 count={dataList.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
-                                SelectProps={{
-                                    inputProps: {
-                                        'aria-label': '페이지당 게시물 수',
-                                    },
-                                    native: true,
-                                }}
+                                labelRowsPerPage='페이지당 게시물 수'
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 ActionsComponent={TablePaginationActions}
